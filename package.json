@@ -1,10 +1,10 @@
 {
   "name": "merch-shop",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Artist merchandise e-commerce platform",
+  "main": "backend/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node backend/index.js",
     "dev": "nodemon backend/index.js"
   },
   "author": "",
