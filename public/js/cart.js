@@ -1,7 +1,8 @@
-// Cart functionality
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
+    var cart = JSON.parse(localStorage.getItem('cart')) || [];
     displayCartItems();
     updateCartTotal();
 });
@@ -15,7 +16,7 @@ function displayCartItems() {
                 <i class="fas fa-shopping-cart"></i>
                 <h3>Tu carrito está vacío</h3>
                 <p>¡Agrega algunos productos increíbles!</p>
-                <a href="index.html" class="btn-primary">Seguir comprando</a>
+                <a href="/" class="btn-primary">Seguir comprando</a>
             </div>
         `;
         return;
@@ -81,6 +82,8 @@ function updateCartTotal() {
     if (totalElement) {
         totalElement.textContent = `$${total.toFixed(2)}`;
     }
+
+    
     
     const checkoutBtn = document.getElementById('checkoutBtn');
     if (checkoutBtn) {
