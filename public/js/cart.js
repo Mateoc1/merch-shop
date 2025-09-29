@@ -2,7 +2,7 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
     displayCartItems();
     updateCartTotal();
 });
@@ -77,12 +77,27 @@ function removeFromCart(index) {
 }
 
 function updateCartTotal() {
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const envio = cart.reduce((sum, item) => sum + (item.quantity * 50), 0);
+    const total = subtotal + envio;
+
+
     const totalElement = document.getElementById('cartTotal');
     if (totalElement) {
-        totalElement.textContent = `$${total.toFixed(2)}`;
+        totalElement.textContent = `$${subtotal.toFixed(2)}`;
     }
 
+
+    const shippingElement = document.getElementById('cartShipping');
+    if (shippingElement) {
+        shippingElement.textContent = `$${envio.toFixed(2)}`;
+    }
+
+
+    const totalElement2 = document.getElementById('cartTotal2');
+    if (totalElement2) {
+        totalElement2.textContent = `$${total.toFixed(2)}`;
+    }
     
     
     const checkoutBtn = document.getElementById('checkoutBtn');
