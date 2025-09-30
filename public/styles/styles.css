@@ -852,6 +852,22 @@ a {
     transform: translateX(0);
 }
 
+.notification.success {
+    background-color: var(--success);
+}
+
+.notification.error {
+    background-color: var(--error);
+}
+
+.notification.info {
+    background-color: #2196F3;
+}
+
+.notification i {
+    margin-right: 0.5rem;
+}
+
 .no-products {
     text-align: center;
     color: #999;

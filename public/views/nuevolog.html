@@ -43,7 +43,7 @@
     <!-- Main content -->
     <main class="main" style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
         <div class="container">
-            <form class="glass-card" action="login.php" method="POST">
+            <form class="glass-card" id="loginForm">
                 <h2>Bienvenido de vuelta</h2>
                 <p>Por favor inicia sesión en tu cuenta</p>
 
@@ -67,6 +67,9 @@
         <p>&copy; 2025 Merch Shop</p>
     </footer>
 
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
 </body>
 
 </html>
