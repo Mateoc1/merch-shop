@@ -3,5 +3,10 @@
     "nombre": "juan perez",
     "email": "perez@gmail.com",
     "password": "12345"
+  },
+  {
+    "nombre": "tomas bande",
+    "email": "tomas.bande.et21.21@gmail.com",
+    "password": "aaaaaaaa"
   }
 ]
