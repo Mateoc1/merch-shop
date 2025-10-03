@@ -46,3 +46,27 @@ if (loginForm) {
     }
   });
 }
+
+// mostrar nombre de usuario si hay sesion 
+async function checkUser() {
+  try {
+    const res = await fetch("/auth/me");
+    if (res.ok) {
+      const user = await res.json();
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      if (usernameDisplay) {
+        usernameDisplay.textContent = " " + user.nombre; // 👈 agrega el nombre
+      }
+
+      // si hay usuario, el link ya no debería ir al login
+      const loginLink = document.getElementById("loginLink");
+      if (loginLink) {
+        loginLink.href = "/"; 
+      }
+    }
+  } catch (err) {
+    console.log("No hay usuario logueado");
+  }
+}
+
+checkUser();

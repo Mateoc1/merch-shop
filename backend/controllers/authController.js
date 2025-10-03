@@ -28,7 +28,7 @@ const register = (req, res) => {                    //register
 };
 
 
-const login = (req, res) => {                       //login
+const login = (req, res) => {
   const { email, password } = req.body;
   const users = readUsers();
 
@@ -38,8 +38,11 @@ const login = (req, res) => {                       //login
   }
 
   req.session.user = user;
+  console.log("✅ Usuario guardado en sesión:", req.session.user); // 👈
+
   res.status(200).send("Login exitoso");
 };
+
 
 
 const logout = (req, res) => {                      //logout

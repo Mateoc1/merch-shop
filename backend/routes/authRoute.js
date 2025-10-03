@@ -42,4 +42,14 @@ router.post("/login", login );
 // --- Logout ---
 router.get("/logout", logout );
 
+// usuario actual
+router.get("/me", (req, res) => {
+  if (req.session.user) {
+    res.json(req.session.user);
+  } else {
+    res.status(401).json({ error: "No hay usuario logueado" });
+  }
+});
+
+
 module.exports = router;
