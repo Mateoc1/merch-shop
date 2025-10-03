@@ -26,8 +26,8 @@
 
             <a href="/carrito">
                 <button title="Carrito">
-    <i class="fas fa-shopping-cart"></i>
-  </button>
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
             </a>
         </div>
     </header>
@@ -43,7 +43,7 @@
     <!-- Main content -->
     <main class="main" style="display: flex; justify-content: center; align-items: center; min-height: 70vh;">
         <div class="container">
-            <form class="glass-card" action="login.php" method="POST">
+            <form class="glass-card" id="loginForm">
                 <h2>Bienvenido de vuelta</h2>
                 <p>Por favor inicia sesión en tu cuenta</p>
 
@@ -56,7 +56,7 @@
                 <button type="submit">Login</button>
 
                 <div class="footer">
-                    <p>¿No tenés cuenta? <a href="register.html">Registrate</a></p>
+                    <p>¿No tenés cuenta? <a href="/register">Registrate</a></p>
                 </div>
             </form>
         </div>
@@ -67,6 +67,8 @@
         <p>&copy; 2025 Merch Shop</p>
     </footer>
 
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="/js/auth.js"></script> <!-- ✅ corregido -->
 </body>
 
 </html>

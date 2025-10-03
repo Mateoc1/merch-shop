@@ -9,3 +9,4 @@ router.get("/", getProducts);
 router.get("/:id", getProductById);
 
 module.exports = router;
+

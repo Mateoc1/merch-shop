@@ -1,18 +1,20 @@
 require("dotenv").config();
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
-// Middleware
-app.use(express.static("public"));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.static("public"));
 
-// Importar rutas
 const viewRoutes = require("./routes/views");
 const productRoutes = require("./routes/products");
+const authRoutes = require("./routes/authRoute");
 
-// Usar rutas
-app.use("/", viewRoutes);
+app.use("/" , viewRoutes);
 app.use("/api/products", productRoutes);
+app.use("/auth", authRoutes);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+const port = process.env.PORT || 4000;
+app.listen(port, () => console.log("http://localhost:${port}"))
