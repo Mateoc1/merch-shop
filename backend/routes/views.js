@@ -27,4 +27,8 @@ router.get("/ayuda", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/front/ayuda.html"));
 });
 
+router.get("/catalogo-artista", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/catalogo-artista.html"));
+});
+
 module.exports = router;
