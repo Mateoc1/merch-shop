@@ -2,11 +2,12 @@
   "name": "merch-shop",
   "version": "1.0.0",
   "description": "Artist merchandise e-commerce platform",
-  "main": "backend/index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/index.js",
-    "dev": "nodemon backend/index.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
+  "keywords": ["ecommerce", "merchandise", "artists"],
   "author": "",
   "license": "ISC",
   "dependencies": {
