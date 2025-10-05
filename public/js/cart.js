@@ -5,7 +5,21 @@ document.addEventListener('DOMContentLoaded', function() {
     cart = JSON.parse(localStorage.getItem('cart')) || [];
     displayCartItems();
     updateCartTotal();
+    checkUserAuthentication();
 });
+
+async function checkUserAuthentication() {
+    try {
+        const { data: { user } } = await supabase.auth.getUser();
+        const stripeCheckoutBtn = document.getElementById('stripeCheckoutBtn');
+        
+        if (user && stripeCheckoutBtn) {
+            stripeCheckoutBtn.style.display = 'block';
+        }
+    } catch (error) {
+        console.log('User not authenticated');
+    }
+}
 
 function displayCartItems() {
     const cartItemsContainer = document.getElementById('cartItems');
@@ -76,6 +90,81 @@ function removeFromCart(index) {
     showNotification('Producto eliminado del carrito');
 }
 
+async function payWithStripe() {
+    try {
+        // Check if user is authenticated
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+            showNotification('Debes iniciar sesión para pagar con Stripe', 'error');
+            window.location.href = '/login';
+            return;
+        }
+
+        if (cart.length === 0) {
+            showNotification('Tu carrito está vacío', 'error');
+            return;
+        }
+
+        // Show loading state
+        const stripeBtn = document.getElementById('stripeCheckoutBtn');
+        const originalText = stripeBtn.innerHTML;
+        stripeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+        stripeBtn.disabled = true;
+
+        // Get user session
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+            showNotification('Sesión expirada. Por favor, inicia sesión nuevamente.', 'error');
+            window.location.href = '/login';
+            return;
+        }
+
+        // Use the Remera luck ra product for Stripe payment
+        const priceId = 'price_1SEyeiKZBjsmEk2LZrr7VNkD';
+        
+        // Create checkout session
+        const response = await fetch(`${supabaseUrl}/functions/v1/stripe-checkout`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${session.access_token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                price_id: priceId,
+                mode: 'payment',
+                success_url: `${window.location.origin}/stripe-success?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${window.location.origin}/carrito`
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Error al crear la sesión de pago');
+        }
+
+        // Redirect to Stripe Checkout
+        if (data.url) {
+            // Clear cart after successful payment initiation
+            localStorage.setItem('cart', JSON.stringify([]));
+            window.location.href = data.url;
+        } else {
+            throw new Error('No se recibió URL de pago');
+        }
+
+    } catch (error) {
+        console.error('Error en checkout:', error);
+        showNotification(error.message || 'Error al procesar el pago', 'error');
+        
+        // Reset button state
+        const stripeBtn = document.getElementById('stripeCheckoutBtn');
+        stripeBtn.innerHTML = '<i class="fas fa-credit-card"></i> Pagar con Stripe';
+        stripeBtn.disabled = false;
+    }
+}
+
 function updateCartTotal() {
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const envio = cart.reduce((sum, item) => sum + (item.quantity * 50), 0);
@@ -136,9 +225,13 @@ function proceedToCheckout() {
     window.location.href = 'checkout.html';
 }
 
-function showNotification(message) {
+function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
-    notification.className = 'notification';
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        ${message}
+    `;
     notification.textContent = message;
     
     document.body.appendChild(notification);
