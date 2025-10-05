@@ -116,6 +116,27 @@ a {
     font-weight: bold;
 }
 
+/* Subscription Status */
+.subscription-status {
+    background-color: var(--success);
+    color: white;
+    padding: 0.5rem 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.subscription-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.subscription-active i {
+    font-size: 1rem;
+}
+
 /* Navigation */
 .main-nav {
     display: flex;
@@ -287,10 +308,38 @@ a {
     color: var(--accent);
 }
 
+.product-card .product-description {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .product-type {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
 .product-actions {
     display: flex;
     gap: 0.5rem;
     justify-content: center;
+}
+
+/* Stripe Products */
+.stripe-product {
+    border: 2px solid var(--accent);
+    background: linear-gradient(135deg, var(--card), #2a2a2a);
+}
+
+.stripe-product .product-type {
+    background-color: var(--accent);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 /* Buttons */
@@ -793,7 +842,7 @@ a {
     line-height: 1.6;
 }
 
-.order-details {
+.payment-details {
     background-color: var(--bg);
     padding: 1.5rem;
     border-radius: 8px;
@@ -801,36 +850,56 @@ a {
     text-align: left;
 }
 
-.order-info,
-.shipping-info,
-.delivery-info {
+.payment-info {
     margin-bottom: 1.5rem;
 }
 
-.order-info:last-child,
-.shipping-info:last-child,
-.delivery-info:last-child {
+.payment-info:last-child {
     margin-bottom: 0;
 }
 
-.order-details h3 {
+.payment-details h3 {
     color: var(--accent);
     margin-bottom: 0.5rem;
 }
 
-.order-details p {
+.payment-details p {
     margin-bottom: 0.25rem;
-}
-
-.delivery-info i {
-    color: var(--accent);
-    margin-right: 0.5rem;
 }
 
 .success-actions {
     display: flex;
     gap: 1rem;
     justify-content: center;
+}
+
+/* Auth Messages */
+.auth-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.auth-message.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--success);
+    color: var(--success);
+}
+
+.auth-message.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid var(--error);
+    color: var(--error);
+}
+
+.auth-message.info {
+    background-color: rgba(33, 150, 243, 0.1);
+    border: 1px solid #2196F3;
+    color: #2196F3;
 }
 
 /* Notifications */
@@ -846,6 +915,9 @@ a {
     transform: translateX(100%);
     transition: transform 0.3s ease;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .notification.show {
@@ -862,10 +934,6 @@ a {
 
 .notification.info {
     background-color: #2196F3;
-}
-
-.notification i {
-    margin-right: 0.5rem;
 }
 
 .no-products {

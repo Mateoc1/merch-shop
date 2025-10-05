@@ -1,29 +1,86 @@
-// registro
+// Supabase configuration
+const SUPABASE_URL = 'https://0ec90b57d6e95fcbda19832f.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Registration form handler
 const registerForm = document.getElementById("registerForm");
 if (registerForm) {
   registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const nombre = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-    const res = await fetch("/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, email, password })
-    });
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      showMessage("Las contraseñas no coinciden", "error");
+      return;
+    }
 
-    if (res.ok) {
-      alert("Registro exitoso, ahora podés iniciar sesión");
-      window.location.href = "/login";
-    } else {
-      alert(await res.text());
+    try {
+      // Show loading state
+      const submitButton = registerForm.querySelector('button[type="submit"]');
+      const originalText = submitButton.innerHTML;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando...';
+      submitButton.disabled = true;
+
+      // Sign up user with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName
+          }
+        }
+      });
+
+      if (authError) throw authError;
+
+      // Insert additional user data into profiles table
+      if (authData.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              id: authData.user.id,
+              email: email,
+              first_name: firstName,
+              last_name: lastName
+            }
+          ]);
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          // Don't throw here as the user is already created
+        }
+      }
+
+      showMessage("Registro exitoso. Ahora puedes iniciar sesión.", "success");
+      
+      // Redirect after a short delay
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+
+    } catch (error) {
+      console.error('Registration error:', error);
+      showMessage(error.message || "Error en el registro", "error");
+      
+      // Reset button state
+      const submitButton = registerForm.querySelector('button[type="submit"]');
+      submitButton.innerHTML = originalText;
+      submitButton.disabled = false;
     }
   });
 }
 
-// login
+// Login form handler
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
@@ -32,59 +89,189 @@ if (loginForm) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const res = await fetch("/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    });
+    try {
+      // Show loading state
+      const submitButton = loginForm.querySelector('button[type="submit"]');
+      const originalText = submitButton.innerHTML;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
+      submitButton.disabled = true;
 
-    if (res.ok) {
-      alert("Login exitoso");
-      window.location.href = "/";
-    } else {
-      alert(await res.text());
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) throw error;
+
+      showMessage("Login exitoso", "success");
+      
+      // Redirect after a short delay
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
+
+    } catch (error) {
+      console.error('Login error:', error);
+      showMessage(error.message || "Credenciales incorrectas", "error");
+      
+      // Reset button state
+      const submitButton = loginForm.querySelector('button[type="submit"]');
+      submitButton.innerHTML = originalText;
+      submitButton.disabled = false;
     }
   });
 }
 
-// mostrar nombre de usuario si hay sesion 
+// Check user authentication status
 async function checkUser() {
   try {
-    const res = await fetch("/auth/me");
-    if (res.ok) {
-      const user = await res.json();
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (user) {
+      // Get user profile
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
 
-      //muestra nombre de usuario
+      const displayName = profile ? profile.first_name : user.email.split('@')[0];
+
+      // Update UI for logged in user
       const usernameDisplay = document.getElementById("usernameDisplay");
-      if (usernameDisplay) usernameDisplay.textContent = " " + user.nombre;
+      if (usernameDisplay) {
+        usernameDisplay.textContent = ` ${displayName}`;
+      }
 
-      //muestra el boton para deslogearse
+      // Show logout button
       const logoutBtn = document.getElementById("logoutBtn");
       if (logoutBtn) {
         logoutBtn.style.display = "inline-block";
         logoutBtn.addEventListener("click", logout);
       }
 
-      
+      // Update login link
       const loginLink = document.getElementById("loginLink");
-      if (loginLink) loginLink.href = "#";
+      if (loginLink) {
+        loginLink.href = "#";
+        loginLink.addEventListener("click", (e) => {
+          e.preventDefault();
+        });
+      }
+
+      // Check and display subscription status
+      checkSubscriptionStatus();
     }
   } catch (err) {
-    console.log("No hay sesión activa");
+    console.log("No active session");
   }
 }
 
+// Check subscription status
+async function checkSubscriptionStatus() {
+  try {
+    const { data: subscription, error } = await supabase
+      .from('stripe_user_subscriptions')
+      .select('*')
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error fetching subscription:', error);
+      return;
+    }
+
+    // Display subscription status
+    displaySubscriptionStatus(subscription);
+
+  } catch (error) {
+    console.error('Error checking subscription:', error);
+  }
+}
+
+// Display subscription status
+function displaySubscriptionStatus(subscription) {
+  // Create subscription status element if it doesn't exist
+  let subscriptionDisplay = document.getElementById('subscriptionStatus');
+  
+  if (!subscriptionDisplay) {
+    subscriptionDisplay = document.createElement('div');
+    subscriptionDisplay.id = 'subscriptionStatus';
+    subscriptionDisplay.className = 'subscription-status';
+    
+    // Insert after header
+    const header = document.querySelector('.header');
+    if (header) {
+      header.insertAdjacentElement('afterend', subscriptionDisplay);
+    }
+  }
+
+  if (subscription && subscription.subscription_status === 'active') {
+    subscriptionDisplay.innerHTML = `
+      <div class="subscription-active">
+        <i class="fas fa-check-circle"></i>
+        <span>Suscripción activa: Remera luck ra</span>
+      </div>
+    `;
+    subscriptionDisplay.style.display = 'block';
+  } else {
+    subscriptionDisplay.style.display = 'none';
+  }
+}
+
+// Logout function
 async function logout() {
   try {
-    const res = await fetch("/auth/logout", { method: "GET" });
-    if (res.ok) {
-      window.location.href = "/"; // redirigir a home
-    }
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+    
+    showMessage("Sesión cerrada exitosamente", "success");
+    
+    // Redirect after a short delay
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
   } catch (err) {
     console.error("Error cerrando sesión:", err);
+    showMessage("Error al cerrar sesión", "error");
   }
 }
 
+// Show message function
+function showMessage(message, type = 'info') {
+  // Remove existing messages
+  const existingMessages = document.querySelectorAll('.auth-message');
+  existingMessages.forEach(msg => msg.remove());
 
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `auth-message ${type}`;
+  messageDiv.innerHTML = `
+    <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+    ${message}
+  `;
+  
+  // Insert at the top of the form or body
+  const form = document.querySelector('.glass-card') || document.body;
+  form.insertBefore(messageDiv, form.firstChild);
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    messageDiv.remove();
+  }, 5000);
+}
 
+// Auth state listener
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') {
+    console.log('User signed in:', session.user);
+  } else if (event === 'SIGNED_OUT') {
+    console.log('User signed out');
+    // Clear subscription status
+    const subscriptionDisplay = document.getElementById('subscriptionStatus');
+    if (subscriptionDisplay) {
+      subscriptionDisplay.style.display = 'none';
+    }
+  }
+});
+
+// Initialize on page load
 checkUser();
