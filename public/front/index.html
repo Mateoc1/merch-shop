@@ -19,21 +19,29 @@
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
 
-        <div class="icons">
-            <a href="/login">
-                <button title="Iniciar sesión">
-                    <i class="fas fa-user"></i>
-                    <span id="usernameDisplay"></span> <!--mostrar nombre -->
-                </button>
-            </a>
+       <div class="icons">
+        <!-- Botón usuario -->
+        <a href="/login" id="loginLink">
+            <button title="Iniciar sesión">
+            <i class="fas fa-user"></i>
+            <span id="usernameDisplay"></span>
+            </button>
+        </a>
 
-            <a href="/carrito">
-                <button title="Carrito" id="cartButton">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cartCount" class="cart-count">0</span>
-                </button>
-            </a>
+        <!-- Botón cerrar sesión (oculto al inicio) -->
+        <button id="logoutBtn" title="Cerrar sesión" style="display:none;">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+
+        <!-- Botón carrito -->
+        <a href="/carrito">
+            <button title="Carrito" id="cartButton">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="cart-count">0</span>
+            </button>
+        </a>
         </div>
+
     </header>
 
     <nav class="main-nav">

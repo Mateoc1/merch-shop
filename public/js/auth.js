@@ -53,20 +53,38 @@ async function checkUser() {
     const res = await fetch("/auth/me");
     if (res.ok) {
       const user = await res.json();
+
+      //muestra nombre de usuario
       const usernameDisplay = document.getElementById("usernameDisplay");
-      if (usernameDisplay) {
-        usernameDisplay.textContent = " " + user.nombre; // 👈 agrega el nombre
+      if (usernameDisplay) usernameDisplay.textContent = " " + user.nombre;
+
+      //muestra el boton para deslogearse
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.style.display = "inline-block";
+        logoutBtn.addEventListener("click", logout);
       }
 
-      // si hay usuario, el link ya no debería ir al login
+      
       const loginLink = document.getElementById("loginLink");
-      if (loginLink) {
-        loginLink.href = "/"; 
-      }
+      if (loginLink) loginLink.href = "#";
     }
   } catch (err) {
-    console.log("No hay usuario logueado");
+    console.log("No hay sesión activa");
   }
 }
+
+async function logout() {
+  try {
+    const res = await fetch("/auth/logout", { method: "GET" });
+    if (res.ok) {
+      window.location.href = "/"; // redirigir a home
+    }
+  } catch (err) {
+    console.error("Error cerrando sesión:", err);
+  }
+}
+
+
 
 checkUser();

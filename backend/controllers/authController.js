@@ -69,7 +69,7 @@ const login = (req, res) => {
     }
 
     req.session.user = user;
-    console.log("✅ Usuario guardado en sesión:", req.session.user);
+    console.log(" Usuario guardado en sesión:", req.session.user);
 
     res.status(200).send("Login exitoso");
 };
