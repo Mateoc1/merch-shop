@@ -67,4 +67,36 @@ router.get("/luck-ra-catalog", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/front/luck-ra-catalog.html"));
 });
 
+router.get("/abel-pintos-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/abel-pintos-catalog.html"));
+});
+
+router.get("/milo-j-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/milo-j-catalog.html"));
+});
+
+router.get("/bizarrap-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/bizarrap-catalog.html"));
+});
+
+router.get("/charly-garcia-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/charly-garcia-catalog.html"));
+});
+
+router.get("/luis-alberto-spinetta-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/luis-alberto-spinetta-catalog.html"));
+});
+
+router.get("/pappo-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/pappo-catalog.html"));
+});
+
+router.get("/indio-solari-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/indio-solari-catalog.html"));
+});
+
+router.get("/nicki-nicole-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/nicki-nicole-catalog.html"));
+});
+
 module.exports = router;
