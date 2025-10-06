@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     cart = JSON.parse(localStorage.getItem('cart')) || [];
     displayCartItems();
@@ -132,7 +129,7 @@ function proceedToCheckout() {
         return;
     }
     
-    // Redirect to checkout page
+    
     window.location.href = 'checkout.html';
 }
 
@@ -154,3 +151,14 @@ function showNotification(message) {
         }, 300);
     }, 3000);
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      //esto te lleva al formulario para pagar
+      window.location.href = "checkout";
+    });
+  }
+});
