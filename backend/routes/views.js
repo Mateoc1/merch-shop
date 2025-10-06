@@ -43,4 +43,20 @@ router.get("/stripe-success", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/front/stripe-success.html"));
 });
 
+router.get("/duki-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/duki-catalog.html"));
+});
+
+router.get("/emilia-mernes-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/emilia-mernes-catalog.html"));
+});
+
+router.get("/tini-stoessel-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/tini-stoessel-catalog.html"));
+});
+
+router.get("/luck-ra-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/front/luck-ra-catalog.html"));
+});
+
 module.exports = router;
