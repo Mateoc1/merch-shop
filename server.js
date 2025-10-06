@@ -414,6 +414,42 @@ app.get("/luis-alberto-spinetta-catalog", (req, res) => {
     res.sendFile(path.join(__dirname, "public/front/luis-alberto-spinetta-catalog.html"));
 });
 
+
+app.get("/milo-j-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/milo-j-catalog.html"));
+});
+
+
+app.get("/bizarrap-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/bizarrap-catalog.html"));
+});
+
+app.get("/charly-garcia-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/charly-garcia-catalog.html"));
+});
+
+app.get("/milo-j-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/indio-solari-catalog.html"));
+});
+
+app.get("/abel-pintos-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/abel-pintos-catalog.html"));
+});
+
+app.get("/pappo-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/pappo-catalog.html"));
+});
+
+app.get("/nicki-nicole-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/nicki-nicole-catalog.html"));
+});
+
+
+
+
+
+
+
 // API Routes
 
 // Get environment config
