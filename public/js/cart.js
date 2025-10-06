@@ -217,14 +217,9 @@ function proceedToCheckout() {
         alert('Tu carrito está vacío');
         return;
     }
-<<<<<<< HEAD
-    
-    
-    window.location.href = 'checkout.html';
-=======
 
     window.location.href = 'https://link.mercadopago.com.ar/merchshop';
->>>>>>> 46483134d640f4d1d7c8e411ddc24f10cbed8ef2
+
 }
 
 function showNotification(message, type = 'success') {

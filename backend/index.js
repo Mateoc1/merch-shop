@@ -40,7 +40,7 @@ app.use((req, res) => {
     res.status(404).send('Page not found');
 });
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);
     console.log(`📁 Serving static files from: ${path.join(__dirname, "../public")}`);
