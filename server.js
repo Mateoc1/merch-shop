@@ -428,7 +428,7 @@ app.get("/charly-garcia-catalog", (req, res) => {
     res.sendFile(path.join(__dirname, "public/front/charly-garcia-catalog.html"));
 });
 
-app.get("/milo-j-catalog", (req, res) => {
+app.get("/indio-solari-catalog", (req, res) => {
     res.sendFile(path.join(__dirname, "public/front/indio-solari-catalog.html"));
 });
 
