@@ -394,6 +394,22 @@ app.get("/order-success", (req, res) => {
     res.sendFile(path.join(__dirname, "public/front/order-success.html"));
 });
 
+app.get("/duki-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/duki-catalog.html"));
+});
+
+app.get("/emilia-mernes-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/emilia-mernes-catalog.html"));
+});
+
+app.get("/tini-stoessel-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/tini-stoessel-catalog.html"));
+});
+
+app.get("/luck-ra-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/luck-ra-catalog.html"));
+});
+
 // API Routes
 
 // Get all products with filtering
