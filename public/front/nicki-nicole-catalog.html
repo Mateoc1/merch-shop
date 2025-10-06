@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcR9DyGjGIcKEikwam8UeVh2cu1bVftGtiYpF7fFVxNTm6ZRknUprlqhsozFTJhYIlysjqQONT7sP9mdp1lty3SaA9WYekXJenXWIhPSLg" alt="Nicki Nicole">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Nicki Nicole</h1>
-                <p>Cantante y compositora argentina de R&B latino, reguetón y pop urbano. Referente femenina de la nueva generación urbana.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>

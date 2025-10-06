@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://media.gq.com.mx/photos/66158e1166548ab1bfa23176/3:2/w_2560%2Cc_limit/GQ_Creativity_Awards_Bizarrap.jpg" alt="Bizarrap">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Bizarrap</h1>
-                <p>Productor discográfico y DJ argentino. Creador de las BZRP Music Sessions. Ganador de 3 Grammy Latinos en 2023.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>

@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://media.a24.com/p/31b3df787fe83b99572a7b1cbb5c77ab/adjuntos/296/imagenes/009/600/0009600280/1200x675/smart/tini-stoessel.jpg" alt="Tini Stoessel">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Tini Stoessel</h1>
-                <p>Cantante argentina con fama internacional por Violetta. Fusiona pop y reguetón con éxitos como Miénteme y La Triple T.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>

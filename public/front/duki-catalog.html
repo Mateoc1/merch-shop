@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/El_Duki.png" alt="Duki">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Duki</h1>
-                <p>Rapero y cantante argentino, referente del trap en español. Saltó a la fama en "El Quinto Escalón" y con temas como She Don't Give a FO.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>

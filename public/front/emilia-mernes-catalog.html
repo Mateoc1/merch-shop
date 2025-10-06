@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://album.mediaset.es/eimg/2024/11/15/imagen-de-emilia-mernes-en-sus-redes-sociales_2272.jpg?w=1200" alt="Emilia Mernes">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Emilia Mernes</h1>
-                <p>Cantante argentina. Con éxitos como Como si no importara se consolidó como una de las voces más destacadas de la música urbana.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>

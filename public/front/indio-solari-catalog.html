@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://comunasweb.com.ar/wp-content/uploads/2018/01/33912_frigorificoasubir3.jpg" alt="Indio Solari">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Indio Solari</h1>
-                <p>Músico y cantante argentino. Fundador de Patricio Rey y sus Redonditos de Ricota. Ícono del rock nacional.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>

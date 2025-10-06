@@ -46,11 +46,11 @@
     <main class="main-content">
         <div class="artist-header">
             <div class="artist-banner">
-                <img src="https://www.lapatriadaweb.com.ar/wp-content/uploads/2025/02/Pappo-solo2.jpeg" alt="Pappo">
+                <img id="artistImage" src="" alt="">
             </div>
             <div class="artist-info">
-                <h1>Pappo</h1>
-                <p>Músico y guitarrista argentino. Precursor del blues, heavy metal y hard rock. Considerado el mejor guitarrista del rock argentino.</p>
+                <h1 id="artistName">Cargando...</h1>
+                <p id="artistDescription"></p>
             </div>
         </div>
 
@@ -133,7 +133,8 @@
         </section>
     </main>
 
-    <script src="../js/artist-catalog-static.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/artist-catalog-dynamic.js"></script>
 
     <footer class="footer">
         <p>&copy; 2025 Merch Shop</p>
