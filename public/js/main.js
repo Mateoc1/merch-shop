@@ -6,7 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartCount();
     loadProducts();
     setupEventListeners();
+    initializeSupabase();
 });
+
+function initializeSupabase() {
+    // Initialize Supabase if not already done
+    if (typeof window.supabase === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+        document.head.appendChild(script);
+    }
+}
 
 function updateCartCount() {
     const cartCount = document.getElementById('cartCount');
