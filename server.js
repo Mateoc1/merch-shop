@@ -410,6 +410,10 @@ app.get("/luck-ra-catalog", (req, res) => {
     res.sendFile(path.join(__dirname, "public/front/luck-ra-catalog.html"));
 });
 
+app.get("/luis-alberto-spinetta-catalog", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/front/luis-alberto-spinetta-catalog.html"));
+});
+
 // API Routes
 
 // Get environment config
