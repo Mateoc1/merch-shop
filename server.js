@@ -27,7 +27,7 @@ const products = [
     {
         id: 1,
         name: "Remera Oficial Duki",
-        price: 3500,
+        price: 13500,
         artist: "Duki",
         artist_slug: "duki",
         category: "clothing",
@@ -40,7 +40,7 @@ const products = [
     {
         id: 2,
         name: "Buzo Trap Duki",
-        price: 5500,
+        price: 25500,
         artist: "Duki",
         artist_slug: "duki",
         category: "clothing",
@@ -53,7 +53,7 @@ const products = [
     {
         id: 3,
         name: "Gorra Duki",
-        price: 2500,
+        price: 12500,
         artist: "Duki",
         artist_slug: "duki",
         category: "accessories",
@@ -66,7 +66,7 @@ const products = [
     {
         id: 4,
         name: "Crop Top Emilia",
-        price: 2800,
+        price: 22800,
         artist: "Emilia Mernes",
         artist_slug: "emilia-mernes",
         category: "clothing",
@@ -79,7 +79,7 @@ const products = [
     {
         id: 5,
         name: "Tote Bag Emilia",
-        price: 1800,
+        price: 81800,
         artist: "Emilia Mernes",
         artist_slug: "emilia-mernes",
         category: "accessories",
@@ -92,7 +92,7 @@ const products = [
     {
         id: 6,
         name: "Remera Tour Tini",
-        price: 3200,
+        price: 13200,
         artist: "Tini Stoessel",
         artist_slug: "tini-stoessel",
         category: "clothing",
@@ -105,7 +105,7 @@ const products = [
     {
         id: 7,
         name: "Vinilo Tini",
-        price: 4500,
+        price: 30500,
         artist: "Tini Stoessel",
         artist_slug: "tini-stoessel",
         category: "records",
@@ -118,7 +118,7 @@ const products = [
     {
         id: 8,
         name: "Remera Cuarteto Luck Ra",
-        price: 3000,
+        price: 13000,
         artist: "Luck Ra",
         artist_slug: "luck-ra",
         category: "clothing",
@@ -131,7 +131,7 @@ const products = [
     {
         id: 9,
         name: "Bandana Luck Ra",
-        price: 1500,
+        price: 8500,
         artist: "Luck Ra",
         artist_slug: "luck-ra",
         category: "accessories",
@@ -144,7 +144,7 @@ const products = [
     {
         id: 10,
         name: "Tazas de Abel Pintos",
-        price: 3500,
+        price: 17500,
         artist: "Abel Pintos",
         artist_slug: "abel-pintos",
         category: "accessories",
@@ -157,7 +157,7 @@ const products = [
     {
         id: 11,
         name: "Remera Abel Pintos",
-        price: 5000,
+        price: 15000,
         artist: "Abel Pintos",
         artist_slug: "abel-pintos",
         category: "clothing",
@@ -170,7 +170,7 @@ const products = [
     {
         id: 12,
         name: "Buzo de Milo J",
-        price: 5000,
+        price: 25000,
         artist: "Milo J",
         artist_slug: "milo-j",
         category: "clothing",
@@ -183,7 +183,7 @@ const products = [
     {
         id: 13,
         name: "Remera Milo J",
-        price: 3000,
+        price: 13000,
         artist: "Milo J",
         artist_slug: "milo-j",
         category: "clothing",
@@ -196,7 +196,7 @@ const products = [
     {
         id: 14,
         name: "Gorra de Bizarrap",
-        price: 2500,
+        price: 9500,
         artist: "Bizarrap",
         artist_slug: "bizarrap",
         category: "accessories",
@@ -209,7 +209,7 @@ const products = [
     {
         id: 15,
         name: "Remera Bizarrap",
-        price: 4000,
+        price: 14000,
         artist: "Bizarrap",
         artist_slug: "bizarrap",
         category: "clothing",
@@ -222,7 +222,7 @@ const products = [
     {
         id: 16,
         name: "Brazalete Charly Garcia",
-        price: 2000,
+        price: 6000,
         artist: "Charly Garcia",
         artist_slug: "charly-garcia",
         category: "accessories",
@@ -235,7 +235,7 @@ const products = [
     {
         id: 17,
         name: "Remera Charly Garcia",
-        price: 3500,
+        price: 13500,
         artist: "Charly Garcia",
         artist_slug: "charly-garcia",
         category: "clothing",
@@ -249,7 +249,7 @@ const products = [
     {
         id: 18,
         name: "Remera Spinetta",
-        price: 3500,
+        price: 11500,
         artist: "Luis Alberto Spinetta",
         artist_slug: "luis-alberto-spinetta",
         category: "clothing",
@@ -262,7 +262,7 @@ const products = [
     {
         id: 19,
         name: "Remera Spinetta",
-        price: 6000,
+        price: 12000,
         artist: "Luis Alberto Spinetta",
         artist_slug: "luis-alberto-spinetta",
         category: "clothing",
@@ -275,7 +275,7 @@ const products = [
     {
         id: 20,
         name: "Remera Pappo",
-        price: 4000,
+        price: 12000,
         artist: "Pappo",
         artist_slug: "pappo",
         category: "clothing",
@@ -288,7 +288,7 @@ const products = [
     {
         id: 21,
         name: "Taza de Pappo",
-        price: 3000,
+        price: 9000,
         artist: "Pappo",
         artist_slug: "pappo",
         category: "accessories",
@@ -301,7 +301,7 @@ const products = [
     {
         id: 22,
         name: "Remera Indio Solari",
-        price: 5000,
+        price: 11000,
         artist: "Indio Solari",
         artist_slug: "indio-solari",
         category: "clothing",
@@ -314,7 +314,7 @@ const products = [
     {
         id: 23,
         name: "Chopp Indio Solari",
-        price: 3000,
+        price: 7000,
         artist: "Indio Solari",
         artist_slug: "indio-solari",
         category: "accessories",
@@ -327,7 +327,7 @@ const products = [
     {
         id: 24,
         name: "Top corto Alma Nicki Nicole",
-        price: 4000,
+        price: 15000,
         artist: "Nicki Nicole",
         artist_slug: "nicki-nicole",
         category: "clothing",
@@ -340,7 +340,7 @@ const products = [
     {
         id: 25,
         name: "Buzo Nicki Nicole",
-        price: 4000,
+        price: 20000,
         artist: "Nicki Nicole",
         artist_slug: "nicki-nicole",
         category: "clothing",
