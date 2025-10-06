@@ -2,6 +2,14 @@ const express = require("express");
 const path = require("path");
 const router = express.Router();
 
+// API endpoint to get environment variables
+router.get("/api/config", (req, res) => {
+    res.json({
+        SUPABASE_URL: process.env.VITE_SUPABASE_URL,
+        SUPABASE_ANON_KEY: process.env.VITE_SUPABASE_ANON_KEY
+    });
+});
+
 // Serve static HTML files from public/views directory
 router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/front/index.html"));

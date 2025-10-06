@@ -1,125 +1,153 @@
-// Supabase configuration
-const SUPABASE_URL = 'https://0ec90b57d6e95fcbda19832f.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJib2x0IiwicmVmIjoiMGVjOTBiNTdkNmU5NWZjYmRhMTk4MzJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4ODE1NzQsImV4cCI6MTc1ODg4MTU3NH0.9I8-U0x86Ak8t2DGaIk0HfvTSLsAyzdnz-Nw00mMkKw';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabase;
 
-// Registration form handler
-const registerForm = document.getElementById("registerForm");
-if (registerForm) {
-  registerForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+async function initSupabase() {
+  try {
+    const response = await fetch('/api/config');
+    const config = await response.json();
 
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      showMessage("Las contraseñas no coinciden", "error");
-      return;
+    if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) {
+      throw new Error('Configuración de Supabase no disponible');
     }
 
-    try {
-      // Show loading state
-      const submitButton = registerForm.querySelector('button[type="submit"]');
-      const originalText = submitButton.innerHTML;
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando...';
-      submitButton.disabled = true;
+    supabase = window.supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+    return supabase;
+  } catch (error) {
+    console.error('Error al inicializar Supabase:', error);
+    showMessage('Error de configuración. Por favor recarga la página.', 'error');
+    throw error;
+  }
+}
 
-      // Sign up user with Supabase Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName
-          }
-        }
-      });
+// Registration form handler
+async function setupRegisterForm() {
+  const registerForm = document.getElementById("registerForm");
+  if (registerForm) {
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-      if (authError) throw authError;
+      if (!supabase) {
+        showMessage("Inicializando... por favor espera", "error");
+        return;
+      }
 
-      // Insert additional user data into profiles table
-      if (authData.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            {
-              id: authData.user.id,
-              email: email,
+      const firstName = document.getElementById("firstName").value;
+      const lastName = document.getElementById("lastName").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Validate passwords match
+      if (password !== confirmPassword) {
+        showMessage("Las contraseñas no coinciden", "error");
+        return;
+      }
+
+      try {
+        // Show loading state
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando...';
+        submitButton.disabled = true;
+
+        // Sign up user with Supabase Auth
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
               first_name: firstName,
               last_name: lastName
             }
-          ]);
+          }
+        });
 
-        if (profileError) {
-          console.error('Profile creation error:', profileError);
-          // Don't throw here as the user is already created
+        if (authError) throw authError;
+
+        // Insert additional user data into profiles table
+        if (authData.user) {
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .insert([
+              {
+                id: authData.user.id,
+                email: email,
+                first_name: firstName,
+                last_name: lastName
+              }
+            ]);
+
+          if (profileError) {
+            console.error('Profile creation error:', profileError);
+          }
         }
+
+        showMessage("Registro exitoso. Ahora puedes iniciar sesión.", "success");
+
+        // Redirect after a short delay
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
+
+      } catch (error) {
+        console.error('Registration error:', error);
+        showMessage(error.message || "Error en el registro", "error");
+
+        // Reset button state
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
       }
-
-      showMessage("Registro exitoso. Ahora puedes iniciar sesión.", "success");
-      
-      // Redirect after a short delay
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
-
-    } catch (error) {
-      console.error('Registration error:', error);
-      showMessage(error.message || "Error en el registro", "error");
-      
-      // Reset button state
-      const submitButton = registerForm.querySelector('button[type="submit"]');
-      submitButton.innerHTML = originalText;
-      submitButton.disabled = false;
-    }
-  });
+    });
+  }
 }
 
 // Login form handler
-const loginForm = document.getElementById("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+async function setupLoginForm() {
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+      if (!supabase) {
+        showMessage("Inicializando... por favor espera", "error");
+        return;
+      }
 
-    try {
-      // Show loading state
-      const submitButton = loginForm.querySelector('button[type="submit"]');
-      const originalText = submitButton.innerHTML;
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
-      submitButton.disabled = true;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+      try {
+        // Show loading state
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
+        submitButton.disabled = true;
 
-      if (error) throw error;
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
 
-      showMessage("Login exitoso", "success");
-      
-      // Redirect after a short delay
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1500);
+        if (error) throw error;
 
-    } catch (error) {
-      console.error('Login error:', error);
-      showMessage(error.message || "Credenciales incorrectas", "error");
-      
-      // Reset button state
-      const submitButton = loginForm.querySelector('button[type="submit"]');
-      submitButton.innerHTML = originalText;
-      submitButton.disabled = false;
-    }
-  });
+        showMessage("Login exitoso", "success");
+
+        // Redirect after a short delay
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
+
+      } catch (error) {
+        console.error('Login error:', error);
+        showMessage(error.message || "Credenciales incorrectas", "error");
+
+        // Reset button state
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+      }
+    });
+  }
 }
 
 // Check user authentication status
@@ -259,19 +287,32 @@ function showMessage(message, type = 'info') {
   }, 5000);
 }
 
-// Auth state listener
-supabase.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN') {
-    console.log('User signed in:', session.user);
-  } else if (event === 'SIGNED_OUT') {
-    console.log('User signed out');
-    // Clear subscription status
-    const subscriptionDisplay = document.getElementById('subscriptionStatus');
-    if (subscriptionDisplay) {
-      subscriptionDisplay.style.display = 'none';
-    }
-  }
-});
+// Initialize Supabase and set up auth
+(async function() {
+  try {
+    await initSupabase();
 
-// Initialize on page load
-checkUser();
+    // Setup form handlers
+    setupRegisterForm();
+    setupLoginForm();
+
+    // Auth state listener
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        console.log('User signed in:', session.user);
+      } else if (event === 'SIGNED_OUT') {
+        console.log('User signed out');
+        // Clear subscription status
+        const subscriptionDisplay = document.getElementById('subscriptionStatus');
+        if (subscriptionDisplay) {
+          subscriptionDisplay.style.display = 'none';
+        }
+      }
+    });
+
+    // Initialize on page load
+    checkUser();
+  } catch (error) {
+    console.error('Failed to initialize app:', error);
+  }
+})();

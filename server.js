@@ -412,6 +412,14 @@ app.get("/luck-ra-catalog", (req, res) => {
 
 // API Routes
 
+// Get environment config
+app.get("/api/config", (req, res) => {
+    res.json({
+        SUPABASE_URL: process.env.VITE_SUPABASE_URL,
+        SUPABASE_ANON_KEY: process.env.VITE_SUPABASE_ANON_KEY
+    });
+});
+
 // Get all products with filtering
 app.get("/api/products", (req, res) => {
     try {
